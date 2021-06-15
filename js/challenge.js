@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   startCounter()
   minusButton.addEventListener("click", decreaseCounter)
   plusButton.addEventListener("click", increaseCounter)
-  //heartButton.addEventListener("click", likeNumberOnCounter)
+  heartButton.addEventListener("click", likeNumberOnCounter)
 })
 
 const increaseCounter = () => {
@@ -41,22 +41,37 @@ const stopCounter = () => {
 
 // like button
 //when clicked appends object with number: number numberOfTimesLiked: 2,
-const heartArrayObj = [
-  {likedNumber: 10,
-    numberOfLikes: 1
-  }
-
-  ]
+const heartArrayOfObjs = []
 
 
 const likeNumberOnCounter = () => {
   let likedNumber = counter.innerHTML
   const heartObj = {}
-  heartObj["number"] = likedNumber
-  heartObj["numberOfLikes"] += 1
+  const heartElement = heartArrayOfObjs.find((element) => element["likedNumber"] === likedNumber )
+  if (heartElement) { 
+    heartElement["numberOfLikes"] = parseInt(heartElement["numberOfLikes"]) + 1
+  } else {
+    heartObj["likedNumber"] = likedNumber
+    heartObj["numberOfLikes"] = 1
+    heartArrayOfObjs.push(heartObj)
+  }
 }
 
 
+
+/*
+const likeNumberOnCounter = () => {
+  let likedNumber = counter.innerHTML
+  const heartObj = {}
+  if (heartArrayOfObjs.find((element) => element["likedNumber"] === likedNumber )) { 
+    
+  } else {
+    heartObj["likedNumber"] = likedNumber
+    heartObj["numberOfLikes"] = 1
+    heartArrayOfObjs.push(heartObj)
+  }
+}
+*/
 
 
 
