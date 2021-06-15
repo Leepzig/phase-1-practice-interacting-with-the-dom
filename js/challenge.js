@@ -6,12 +6,15 @@ const minusButton = document.querySelector("#minus")
 const plusButton = document.querySelector("#plus")
 const heartButton = document.querySelector("#heart")
 const pauseButton = document.querySelector("#pause")
+const buttons = document.querySelectorAll('button')
+const comment = document.querySelector("#comment-form")
 
 document.addEventListener("DOMContentLoaded", (event) => {
   startCounter()
   minusButton.addEventListener("click", decreaseCounter)
   plusButton.addEventListener("click", increaseCounter)
   heartButton.addEventListener("click", likeNumberOnCounter)
+  comment.addEventListener("submit", addComment)
 })
 
 const increaseCounter = () => {
@@ -29,6 +32,7 @@ const startCounter = () => {
   counting = setInterval(increaseCounter, 1000)
   pauseButton.removeEventListener("click", startCounter)
   pauseButton.addEventListener("click", stopCounter)
+  buttons.forEach(button => button.disabled = false)
   return counting
 }
 
@@ -36,6 +40,8 @@ const stopCounter = () => {
   pauseButton.innerHTML = "resume"
   pauseButton.removeEventListener("click", stopCounter)
   pauseButton.addEventListener("click", startCounter)
+  buttons.forEach(button => button.disabled = true)
+  pauseButton.disabled = false
   return clearInterval(counting)
 }
 
@@ -60,28 +66,23 @@ const likeNumberOnCounter = () => {
 }
 
 const printNumberLikes = () => {
-  const list = document.querySelector("#list")
-  list.innerHTML = ""
+  const likes = document.querySelector(".likes")
+  likes.innerHTML = ""
   heartArrayOfObjs.forEach(element => {
-    let p = document.createElement("p")
-    p.innerHTML = `${element["likedNumber"]} has been liked ${element["numberOfLikes"]} ${ element["numberOfLikes"] === 1 ? "time" : "times" }`
-    list.appendChild(p)
+    let li = document.createElement("li")
+    li.innerText = `${element["likedNumber"]} has been liked ${element["numberOfLikes"]} ${ element["numberOfLikes"] === 1 ? "time" : "times" }`
+    likes.appendChild(li)
   })
 }
 
-// const updateNumberLikes = () => {
-//   const list = document.querySelector("#list")
-//   heartArrayOfObjs.forEach(element => {
-//     list.firstElementChild.remove()
-//     let p = document.createElement("p")
-//     p.innerHTML = `${element["likedNumber"]} has been liked ${element["numberOfLikes"]} ${ element["numberOfLikes"] === 1 ? "time" : "times" }`
-//   })
-//   }
-
-
-
-
-
+const addComment = (event) => {
+  event.preventDefault()
+  const list = document.querySelector("#list")
+  const p = document.createElement('p')
+  p.innerText =  document.querySelector("#comment-input").value
+  list.appendChild(p)
+  document.querySelector("#comment-input").value = ""
+}
 
 //comments
 
