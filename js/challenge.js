@@ -50,28 +50,36 @@ const likeNumberOnCounter = () => {
   const heartElement = heartArrayOfObjs.find((element) => element["likedNumber"] === likedNumber )
   if (heartElement) { 
     heartElement["numberOfLikes"] = parseInt(heartElement["numberOfLikes"]) + 1
+    printNumberLikes(heartElement)
   } else {
     heartObj["likedNumber"] = likedNumber
     heartObj["numberOfLikes"] = 1
     heartArrayOfObjs.push(heartObj)
+    printNumberLikes(heartObj)
   }
 }
 
-
-
-/*
-const likeNumberOnCounter = () => {
-  let likedNumber = counter.innerHTML
-  const heartObj = {}
-  if (heartArrayOfObjs.find((element) => element["likedNumber"] === likedNumber )) { 
-    
-  } else {
-    heartObj["likedNumber"] = likedNumber
-    heartObj["numberOfLikes"] = 1
-    heartArrayOfObjs.push(heartObj)
-  }
+const printNumberLikes = () => {
+  const list = document.querySelector("#list")
+  list.innerHTML = ""
+  heartArrayOfObjs.forEach(element => {
+    let p = document.createElement("p")
+    p.innerHTML = `${element["likedNumber"]} has been liked ${element["numberOfLikes"]} ${ element["numberOfLikes"] === 1 ? "time" : "times" }`
+    list.appendChild(p)
+  })
 }
-*/
+
+// const updateNumberLikes = () => {
+//   const list = document.querySelector("#list")
+//   heartArrayOfObjs.forEach(element => {
+//     list.firstElementChild.remove()
+//     let p = document.createElement("p")
+//     p.innerHTML = `${element["likedNumber"]} has been liked ${element["numberOfLikes"]} ${ element["numberOfLikes"] === 1 ? "time" : "times" }`
+//   })
+//   }
+
+
+
 
 
 
